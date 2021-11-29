@@ -15,7 +15,7 @@ class RandomRestartAgent(Agent.Agent):
     # random restarts.
     def run(self):
         for i in range(self.num_restarts):
-            self.agent.print_state()
+            # self.agent.print_state()
             # run the hill climbing agent:
             self.agent.run()
 
