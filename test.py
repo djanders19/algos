@@ -1,5 +1,6 @@
 import functions as f
 import HillClimbingAgent as hc
+import RandomRestartAgent as rr
 
 rosenbrock_minimum = [1,1]
 rastrigin_ackley_sphere_minimum = [0,0]
@@ -39,10 +40,15 @@ print(num2)
 num3 = d.eval(rastrigin_ackley_sphere_minimum)
 print(num3)
 
-print("\n\n NOW TESTING HILL-CLIMBING")
-agent = hc.HillClimbingAgent(d, rosenbrock_minimum, 0.01)
+print("\n\nNOW TESTING HILL-CLIMBING")
+agent = hc.HillClimbingAgent(b, rosenbrock_minimum, 0.01)
 agent.print_state()
-agent.run_for_n_iterations(1)
-agent.run_for_n_iterations(5)
-agent.run_for_n_iterations(1000)
-#agent.run()
+agent.run()
+print("\nBEST SOLUTION FOUND:")
+agent.print_state()
+
+print("\n\nNOW TESTING RANDOM-RESTART HILL-CLIMBING")
+agent = rr.RandomRestartAgent(b, rosenbrock_minimum, 0.01, 10, 5.0)
+agent.run()
+print("\n\nBEST SOLUTION FOUND:")
+agent.print_state()

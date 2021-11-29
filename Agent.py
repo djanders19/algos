@@ -14,7 +14,7 @@ class Agent:
     # 3. sa - simulated annealing
     def __init__(self, problem, initial_state):
         self.problem = problem
-        self.state = initial_state
+        self.state = initial_state.copy()
         self.value = self.eval(self.state)
 
     def print_state(self):
