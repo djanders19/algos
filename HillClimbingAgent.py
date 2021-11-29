@@ -4,7 +4,7 @@ class HillClimbingAgent(Agent.Agent):
     
     def __init__(self, problem, initial_state, step_size):
         super(HillClimbingAgent, self).__init__(problem, initial_state)
-        this.step_size = step_size
+        self.step_size = step_size
 
     
     # Internal function that finds the optimal step from current agent location.
@@ -16,7 +16,7 @@ class HillClimbingAgent(Agent.Agent):
         for i in range(self.problem.dim):
             # Test the value of incrementing each dimension by stepsize
             localState = self.state.copy()
-            localState[i] += step_size
+            localState[i] += self.step_size
             localDiff = self.value - self.eval(localState)
 
             # If there's a steeper step than the best so far, we want to take it
@@ -26,7 +26,7 @@ class HillClimbingAgent(Agent.Agent):
             
             # Repeat, but decrementing in the dimension:
             localState = self.state.copy()
-            localState[i] -= step_size
+            localState[i] -= self.step_size
             localDiff = self.value - self.eval(localState)
 
             if (localDiff > diff):
@@ -34,7 +34,7 @@ class HillClimbingAgent(Agent.Agent):
                 diff = localDiff
         
         self.state = bestSoFar.copy()
-        self.value = self.eval()
+        self.value = self.eval(self.state)
     
     # Run the Hill Climbing algorithm without a specified stopping point
     def run(self):
@@ -55,6 +55,4 @@ class HillClimbingAgent(Agent.Agent):
                 return
         self.print_state()
         return
-            
-
 
