@@ -15,11 +15,11 @@ class Agent:
     def __init__(self, problem, initial_state):
         self.problem = problem
         self.state = initial_state
-        self.value = self.eval()
+        self.value = self.eval(self.state)
 
     def print_state(self):
         print("Agent is at state: ", self.state)
-        print("Value is: ", self.eval())
+        print("Value is: ", self.eval(self.state))
 
-    def eval(self):
-        return self.problem.eval(self.state)
+    def eval(self, state):
+        return self.problem.eval(state)
