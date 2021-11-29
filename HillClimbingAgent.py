@@ -36,8 +36,25 @@ class HillClimbingAgent(Agent.Agent):
         self.state = bestSoFar.copy()
         self.value = self.eval()
     
-    # Run the Hill Climbing algorithm
+    # Run the Hill Climbing algorithm without a specified stopping point
     def run(self):
+        while True:
+            curr_state = self.state.copy()
+            self._step()
+            if self.state == curr_state:
+                self.print_state()
+                return
 
+    # Run the hill-climbing algorithm for the specified number of iterations
+    def run_for_n_iterations(self, iterations):
+        for i in range(iterations):
+            curr_state = self.state.copy()
+            self._step()
+            if self.state == curr_state:
+                self.print_state()
+                return
+        self.print_state()
+        return
+            
 
 
