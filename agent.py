@@ -20,7 +20,6 @@ class Agent:
     def print_state(self):
         print("Agent is at state: ", self.state)
         print("Value is: ", self.eval())
-        print("Loss is: ", self.optimality())
 
     def eval(self):
         return self.problem.eval(self.state)
