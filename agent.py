@@ -5,7 +5,22 @@
 # ol' random walk, or something fancier like Simulated Annealing.
 
 class Agent:
-    def __init__(self, problem, initial_state, strategy):
-        this.problem = problem
-        this.state = initial_state
-        this.strategy = strategy
+
+    # Initialize the agent with a particular problem, an initial state, and 
+    # a "strategy".
+    # Strategies may be one of:
+    # 1. hc - naive hill climbing
+    # 2. rrhc - random restart hill climbing
+    # 3. sa - simulated annealing
+    def __init__(self, problem, initial_state):
+        self.problem = problem
+        self.state = initial_state
+        self.value = self.eval()
+
+    def print_state(self):
+        print("Agent is at state: ", self.state)
+        print("Value is: ", self.eval())
+        print("Loss is: ", self.optimality())
+
+    def eval(self):
+        return self.problem.eval(self.state)
