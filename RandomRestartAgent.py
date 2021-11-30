@@ -8,7 +8,6 @@ class RandomRestartAgent(Agent.Agent):
         self.step_size = step_size
         self.num_restarts = num_restarts
         self.agent = hc.HillClimbingAgent(problem, initial_state, step_size)
-        self.value = self.problem.eval(self.state)
         self.start_range = start_range
 
     # Runs the hill-climbing algorithm, but with <self.num_restarts>
