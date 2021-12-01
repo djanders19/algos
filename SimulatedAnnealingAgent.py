@@ -25,7 +25,8 @@ class SimulatedAnnealingAgent(Agent.Agent):
             if (delta_e > 0):
                 self.state = temp_state.copy()
                 self.value = self.eval(self.state)
-                self.best_state_found = temp_state.copy()
+                if (self.value < self.eval(self.best_state_found)):
+                    self.best_state_found = temp_state.copy()
             elif rand.uniform(0, 1) < math.exp(delta_e / temperature):
                 # Otherwise, the move is uphill or sideways, and we want to
                 # allow the move with probability e^(delta-E / T). This is 
