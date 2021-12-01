@@ -18,14 +18,17 @@ class Function:
         
         # Evaluate based on the type of the function:
         if (self.type == "rosenbrock"):
-            print("Evaluating Rosenbrock function")
+            # print("Evaluating Rosenbrock function")
             return self.eval_rosenbrock(location)
         if (self.type == "rastrigin"):
-            print("Evaluating Rastrigin function")
+            # print("Evaluating Rastrigin function")
             return self.eval_rastrigin(location)
         if (self.type == "ackley"):
-            print("Evaluating Ackley function")
+            # print("Evaluating Ackley function")
             return self.eval_ackley(location)
+        if (self.type == "sphere"):
+            # print("Evaluating Sphere function")
+            return self.eval_sphere(location)
         
         print("Function.eval(): unrecognized function type. Returning.")
         return
@@ -84,3 +87,15 @@ class Function:
 
         return (-a * math.exp(-b * math.sqrt(left_sum / self.dim)) - 
                 math.exp(right_sum / self.dim) + a + math.exp(1))
+
+    
+    # The following function evaluates the n-dimensional location argument value
+    # when plugged into the Sphere function as defined here:
+    # https://www.sfu.ca/~ssurjano/spheref.html
+    def eval_sphere(self, location):
+        acc = 0
+
+        for i in range(self.dim):
+            acc += location[i] ** 2
+        
+        return acc
