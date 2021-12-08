@@ -1,7 +1,7 @@
 import math
 import random as rand
 
-from agent.Agent import Agent
+from agent.agent import Agent
 
 
 class SimulatedAnnealingAgent(Agent):

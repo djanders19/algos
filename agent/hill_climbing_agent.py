@@ -1,4 +1,4 @@
-from agent.Agent import Agent
+from agent.agent import Agent
 
 
 class HillClimbingAgent(Agent):

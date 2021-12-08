@@ -1,8 +1,8 @@
 import random as rand
 
-from agent.Agent import Agent
+from agent.agent import Agent
 import agent.functions as f
-import agent.HillClimbingAgent as hc
+from agent.hill_climbing_agent import HillClimbingAgent
 
 
 class RandomRestartAgent(Agent):
@@ -10,7 +10,7 @@ class RandomRestartAgent(Agent):
         super(RandomRestartAgent, self).__init__(function_type, initial_state)
         self.step_size = step_size
         self.num_restarts = num_restarts
-        self.agent = hc.HillClimbingAgent(function_type, initial_state, step_size)
+        self.agent = HillClimbingAgent(function_type, initial_state, step_size)
         self.start_range = start_range
 
     # Runs the hill-climbing algorithm, but with <self.num_restarts>

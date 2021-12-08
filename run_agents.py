@@ -1,9 +1,9 @@
 import random as rand
 
 import agent.functions as f
-import agent.HillClimbingAgent as hc
-import agent.RandomRestartAgent as rr
-import agent.SimulatedAnnealingAgent as sa
+from agent.hill_climbing_agent import HillClimbingAgent
+from agent.random_restart_agent import RandomRestartAgent
+from agent.simulated_annealing_agent import SimulatedAnnealingAgent
 
 
 ROSENBROCK_MINIMUM = [1,1]
@@ -40,7 +40,7 @@ print(num3)
 print("\n\nNOW TESTING HILL-CLIMBING")
 print("ROSENBROCK:")
 state = [rand.uniform(-2.048, 2.048) for _ in range(len(RASTRIGIN_ACKLEY_SPHERE_MINIMUM))]
-agent = hc.HillClimbingAgent("rosenbrock", state, 0.01)
+agent = HillClimbingAgent("rosenbrock", state, 0.01)
 agent.print_state()
 agent.run()
 print("\nBEST ROSENBROCK SOLUTION FOUND:")
@@ -48,7 +48,7 @@ agent.print_state()
 
 print("\n\nRASTRIGIN:")
 state = [rand.uniform(-5.12, 5.12) for _ in range(len(RASTRIGIN_ACKLEY_SPHERE_MINIMUM))]
-agent = hc.HillClimbingAgent("rastrigin", state, 0.01)
+agent = HillClimbingAgent("rastrigin", state, 0.01)
 agent.print_state()
 agent.run()
 print("\nBEST RASTRIGIN SOLUTION FOUND:")
@@ -56,7 +56,7 @@ agent.print_state()
 
 print("\n\nACKLEY:")
 state = [rand.uniform(-32.768, 32.768) for _ in range(len(RASTRIGIN_ACKLEY_SPHERE_MINIMUM))]
-agent = hc.HillClimbingAgent("ackley", state, 0.01)
+agent = HillClimbingAgent("ackley", state, 0.01)
 agent.print_state()
 agent.run()
 print("\nBEST ACKLEY SOLUTION FOUND:")
@@ -64,7 +64,7 @@ agent.print_state()
 
 print("\n\nSPHERE:")
 state = [rand.uniform(-5.12, 5.12) for _ in range(len(RASTRIGIN_ACKLEY_SPHERE_MINIMUM))]
-agent = hc.HillClimbingAgent("sphere", state, 0.01)
+agent = HillClimbingAgent("sphere", state, 0.01)
 agent.print_state()
 agent.run()
 print("\nBEST SPHERE SOLUTION FOUND:")
@@ -75,7 +75,7 @@ agent.print_state()
 print("\n\nNOW TESTING RANDOM-RESTART HILL-CLIMBING")
 print("ROSENBROCK:")
 state = [rand.uniform(-2.048, 2.048) for _ in range(len(RASTRIGIN_ACKLEY_SPHERE_MINIMUM))]
-agent = rr.RandomRestartAgent("rosenbrock", state, 0.01, 10, 2.048)
+agent = RandomRestartAgent("rosenbrock", state, 0.01, 10, 2.048)
 agent.print_state()
 agent.run()
 print("\nBEST ROSENBROCK SOLUTION FOUND:")
@@ -83,7 +83,7 @@ agent.print_state()
 
 print("\n\nRASTRIGIN:")
 state = [rand.uniform(-5.12, 5.12) for _ in range(len(RASTRIGIN_ACKLEY_SPHERE_MINIMUM))]
-agent = rr.RandomRestartAgent("rastrigin", state, 0.01, 10, 5.12)
+agent = RandomRestartAgent("rastrigin", state, 0.01, 10, 5.12)
 agent.print_state()
 agent.run()
 print("\nBEST RASTRIGIN SOLUTION FOUND:")
@@ -91,7 +91,7 @@ agent.print_state()
 
 print("\n\nACKLEY:")
 state = [rand.uniform(-32.768, 32.768) for _ in range(len(RASTRIGIN_ACKLEY_SPHERE_MINIMUM))]
-agent = rr.RandomRestartAgent("ackley", state, 0.01, 10, 32.768)
+agent = RandomRestartAgent("ackley", state, 0.01, 10, 32.768)
 agent.print_state()
 agent.run()
 print("\nBEST ACKLEY SOLUTION FOUND:")
@@ -99,7 +99,7 @@ agent.print_state()
 
 print("\n\nSPHERE:")
 state = [rand.uniform(-5.12, 5.12) for _ in range(len(RASTRIGIN_ACKLEY_SPHERE_MINIMUM))]
-agent = rr.RandomRestartAgent("sphere", state, 0.01, 10, 5.12)
+agent = RandomRestartAgent("sphere", state, 0.01, 10, 5.12)
 agent.print_state()
 agent.run()
 print("\nBEST SPHERE SOLUTION FOUND:")
@@ -112,7 +112,7 @@ schedule = [x / 1000.0 for x in range(25000, 0, -1)]
 
 print("ROSENBROCK:")
 state = [rand.uniform(-2.048, 2.048) for _ in range(len(RASTRIGIN_ACKLEY_SPHERE_MINIMUM))]
-agent = sa.SimulatedAnnealingAgent("rosenbrock", state, 0.1, schedule)
+agent = SimulatedAnnealingAgent("rosenbrock", state, 0.1, schedule)
 agent.print_state()
 agent.run()
 print("\nBEST ROSENBROCK SOLUTION FOUND:")
@@ -120,7 +120,7 @@ agent.print_state()
 
 print("\n\nRASTRIGIN:")
 state = [rand.uniform(-5.12, 5.12) for _ in range(len(RASTRIGIN_ACKLEY_SPHERE_MINIMUM))]
-agent = sa.SimulatedAnnealingAgent("rastrigin", state, 0.1, schedule)
+agent = SimulatedAnnealingAgent("rastrigin", state, 0.1, schedule)
 agent.print_state()
 agent.run()
 print("\nBEST RASTRIGIN SOLUTION FOUND:")
@@ -128,7 +128,7 @@ agent.print_state()
 
 print("\n\nACKLEY:")
 state = [rand.uniform(-32.768, 32.768) for _ in range(len(RASTRIGIN_ACKLEY_SPHERE_MINIMUM))]
-agent = sa.SimulatedAnnealingAgent("ackley", state, 0.1, schedule)
+agent = SimulatedAnnealingAgent("ackley", state, 0.1, schedule)
 agent.print_state()
 agent.run()
 print("\nBEST ACKLEY SOLUTION FOUND:")
@@ -136,7 +136,7 @@ agent.print_state()
 
 print("\n\nSPHERE:")
 state = [rand.uniform(-5.12, 5.12) for _ in range(len(RASTRIGIN_ACKLEY_SPHERE_MINIMUM))]
-agent = sa.SimulatedAnnealingAgent("sphere", state, 0.1, schedule)
+agent = SimulatedAnnealingAgent("sphere", state, 0.1, schedule)
 agent.print_state()
 agent.run()
 print("\nBEST SPHERE SOLUTION FOUND:")
