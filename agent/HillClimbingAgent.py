@@ -1,9 +1,10 @@
-import Agent
+from agent.Agent import Agent
 
-class HillClimbingAgent(Agent.Agent):
+
+class HillClimbingAgent(Agent):
     
-    def __init__(self, problem, initial_state, step_size):
-        super(HillClimbingAgent, self).__init__(problem, initial_state)
+    def __init__(self, function_type, initial_state, step_size):
+        super(HillClimbingAgent, self).__init__(function_type, initial_state)
         self.step_size = step_size
 
     
@@ -13,7 +14,7 @@ class HillClimbingAgent(Agent.Agent):
         bestSoFar = self.state
         diff = 0
 
-        for i in range(self.problem.dim):
+        for i in range(self.dimensions):
             # Test the value of incrementing each dimension by stepsize
             localState = self.state.copy()
             localState[i] += self.step_size
@@ -47,7 +48,7 @@ class HillClimbingAgent(Agent.Agent):
 
     # Run the hill-climbing algorithm for the specified number of iterations
     def run_for_n_iterations(self, iterations):
-        for i in range(iterations):
+        for _ in range(iterations):
             curr_state = self.state.copy()
             self._step()
             if self.state == curr_state:
