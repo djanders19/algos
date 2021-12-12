@@ -59,5 +59,14 @@ def random_points():
     return jsonify(POINTS)
 
 
+@app.route("/reset")
+def reset_graph_and_points():
+    global GRAPH
+    global POINTS
+    GRAPH = make_random_graph()
+    POINTS = make_random_points()
+    return "Created new graph and points"
+
+
 if __name__ == "__main__":
 	app.run("0.0.0.0", 5000, debug=True)
