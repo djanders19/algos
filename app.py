@@ -8,21 +8,14 @@ from flask import Flask, jsonify, render_template
 NUM_DAYS = 1000
 START_VAL = 98.6
 
-app = Flask(__name__)
 
-
-@app.route("/")
-def index():
-    return render_template("index.html")
-
-@app.route("/graph")
-def random_graph():
+def make_random_graph() -> list:
     base = datetime.today()
     date_list = [base - timedelta(days=x) for x in range(NUM_DAYS)]
 
     last_val = START_VAL
 
-    chart = []
+    graph = []
     for date in date_list:
         data_point = {}
         data_point["date"] = date.strftime("%Y-%m-%d")
@@ -35,9 +28,35 @@ def random_graph():
         data_point["value"] = str(round(new_val, 2))
         last_val = new_val
 
-        chart.append(data_point)
+        graph.append(data_point)
 
-    return jsonify(chart)
+    return graph
+
+
+def make_random_points() -> list:
+    num_points = random.randint(42, 69)
+    return random.choices(GRAPH, k=num_points)
+
+
+GRAPH = make_random_graph()
+POINTS = make_random_points()
+
+app = Flask(__name__)
+
+
+@app.route("/")
+def index():
+    return render_template("index.html")
+
+
+@app.route("/graph")
+def random_graph():
+    return jsonify(GRAPH)
+
+
+@app.route("/points")
+def random_points():
+    return jsonify(POINTS)
 
 
 if __name__ == "__main__":

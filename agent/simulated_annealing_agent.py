@@ -1,10 +1,12 @@
-import Agent
-import random as rand
 import math
+import random as rand
 
-class SimulatedAnnealingAgent(Agent.Agent):
-    def __init__(self, problem, initial_state, random_range, schedule):
-        super(SimulatedAnnealingAgent, self).__init__(problem, initial_state)
+from agent.agent import Agent
+
+
+class SimulatedAnnealingAgent(Agent):
+    def __init__(self, function_type, initial_state, random_range, schedule):
+        super(SimulatedAnnealingAgent, self).__init__(function_type, initial_state)
         self.random_range = random_range
         self.schedule = schedule
         self.best_state_found = self.state.copy()
@@ -14,7 +16,7 @@ class SimulatedAnnealingAgent(Agent.Agent):
             temperature = self.schedule[i]
             
             # Randomly select a successor
-            elem_to_adjust = rand.randrange(0, self.problem.dim)
+            elem_to_adjust = rand.randrange(0, self.dimensions)
             temp_state = self.state.copy()
             temp_state[elem_to_adjust] += rand.uniform(-self.random_range, self.random_range)
 
