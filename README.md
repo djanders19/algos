@@ -6,7 +6,11 @@ Simulated Annealing, Hill Climbing/Gradient Descent, and Random-Restart Hill Cli
 
 To run:
 
+Open a terminal and navigate to the root directory of this project.
+
 ```
 pip3 install -r requirements.txt
 python3 ./app.py
 ```
+
+Open a web browser and navigate to http://localhost:5000
