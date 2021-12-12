@@ -24,7 +24,6 @@
           .attr("transform",
                 "translate(" + margin.left + "," + margin.top + ")");
 
-
       let x;
       let y;
 
@@ -60,135 +59,37 @@
         }
       );
 
-      // // add points -- THIS WORKS
-      // d3.json("/points",
-      //   function(data){
-      //     console.log(`Data: ${data}`);
-      //       svg.append('g')
-      //       .selectAll("dot")
-      //       .data(data)
-      //       .enter()
-      //       .append("circle")
-      //         .attr("cx", function (d) { return x(d3.timeParse("%Y-%m-%d")(d.date)) } )
-      //         .attr("cy", function (d) { return y(d.value) } )
-      //         .attr("r", 1.5)
-      //         .style("fill", "red")
-      //   }
-      // );
+      // Bad but functional
 
+      let i = 0;
+      let dot;
+      const t = svg.transition().duration(500);
 
-      // // add points -- THIS WORKS
-      // d3.json("/points",
-      //   function(data){
-      //     // console.log(`Data: ${data}`);
-      //     data.forEach(point => {
-      //       // console.log(`Point: ${point}, ${point.date}, ${point.value}`);
-      //       svg.append('g')
-      //       .append("circle")
-      //         .attr("cx", function (d) { return x(d3.timeParse("%Y-%m-%d")(point.date)) } )
-      //         .attr("cy", function (d) { return y(point.value) } )
-      //         .attr("r", 1.5)
-      //         .style("fill", "red");
-      //     });
-      //   }
-      // );
-
-
-      // resolves all promises at the same time...
-
-      // function sleep (time) {
-      //   return new Promise((resolve) => setTimeout(resolve, time));
-      // }
-      
-      // // add points
-      // d3.json("/points",
-      //   function(data){
-      //     // console.log(`Data: ${data}`);
-      //     // setTimeout({return}, 2000);
-      //     data.forEach(point => {
-      //       console.log(`Point: ${point}, ${point.date}, ${point.value}`);
-      //       sleep(10000).then(() => {
-      //           // Do something after the sleep!
-      //           console.log("slept");
-      //           svg.append('g')
-      //           .append("circle")
-      //             .attr("cx", function (d) { return x(d3.timeParse("%Y-%m-%d")(point.date)) } )
-      //             .attr("cy", function (d) { return y(point.value) } )
-      //             .attr("r", 1.5)
-      //             .style("fill", "red");
-      //       });
-      //       // svg.append('g')
-      //       // .append("circle")
-      //       //   .attr("cx", function (d) { return x(d3.timeParse("%Y-%m-%d")(point.date)) } )
-      //       //   .attr("cy", function (d) { return y(point.value) } )
-      //       //   .attr("r", 1.5)
-      //       //   .style("fill", "red");
-      //     });
-      //   }
-      // );
-
-
-      // Animates from the first point to the last point only?!
-      const t = svg.transition().duration(1000);
+      function animatePoints(end, data) {
+        setTimeout(function() {
+          if (i + 1 < data.length) {
+            let nextPoint = data[i + 1];
+            dot.transition(t)
+                  .attr("cx", d => x(d3.timeParse("%Y-%m-%d")(nextPoint.date)))
+                  .attr("cy", d => y(nextPoint.value))
+          }
+          i++;
+          if (i < end) {
+            animatePoints(end, data); 
+          }
+        }, 500)
+      }
 
       d3.json("/points",
         function(data){
-          // console.log(`Data: ${data}`);
-
-          const firstPoint = data[0]
-          console.log(`First point: ${firstPoint.date}, ${firstPoint.value}`);
-
-          const dot = svg.append('g')
-          .append("circle")
-            .attr("cx", function (d) { return x(d3.timeParse("%Y-%m-%d")(firstPoint.date)) } )
-            .attr("cy", function (d) { return y(firstPoint.value) } )
-            .attr("r", 1.5)
-            .style("fill", "red");
-
-          let nextPoint = firstPoint;
-
-          data.forEach((point, index) => {
-            // console.log(`Point: ${point}, ${point.date}, ${point.value}`);
-            // svg.append('g')
-            // .append("circle")
-            //   .attr("cx", function (d) { return x(d3.timeParse("%Y-%m-%d")(point.date)) } )
-            //   .attr("cy", function (d) { return y(point.value) } )
-            //   .attr("r", 1.5)
-            //   .style("fill", "red");
-            if (index < data.length - 1) {
-              console.log("still goin");
-              // get next Element and transition to it
-              nextPoint = data[index + 1];
-              console.log(`Next point: ${nextPoint.date}, ${nextPoint.value}`)
-              dot.transition(t)
-                .attr("cx", d => x(d3.timeParse("%Y-%m-%d")(nextPoint.date)))
-                .attr("cy", d => y(nextPoint.value));
-            } else {
-              console.log("end");
-            }
-          });
-        }
-      );
-
-
-      // TODO: test this
-
-      // const t = svg.transition().duration(1000);
-      // // add points -- THIS WORKS
-      // d3.json("/points",
-      //   function(data){
-      //     console.log(`Data: ${data}`);
-      //       svg.append('g')
-      //       .selectAll("dot")
-      //       .data(data)
-      //       .enter()
-      //       .append("circle")
-      //         .attr("cx", function (d) { return x(d3.timeParse("%Y-%m-%d")(d.date)) } )
-      //         .attr("cy", function (d) { return y(d.value) } )
-      //         .attr("r", 1.5)
-      //         .style("fill", "red")
-      //   }
-      // );
+          dot = svg.append('g')
+              .append("circle")
+                .attr("cx", function (d) { return x(d3.timeParse("%Y-%m-%d")(data[i].date)) } )
+                .attr("cy", function (d) { return y(data[i].value) } )
+                .attr("r", 1.5)
+                .style("fill", "red");
+          animatePoints(data.length - 1, data);
+      });
 
     </script>
 
