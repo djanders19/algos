@@ -31,7 +31,7 @@ def evaluate_range(function_type, start, end, steps):
     return vals_in_range
 
 
-
+# 2D and up only, not for demo!
 def evaluate_rosenbrock(location):
     acc = 0; # accumulator
 
@@ -104,9 +104,12 @@ def evaluate_sphere(location):
     return acc
 
 
-# TODO: create this
+# For demo (1D) only
 def evaluate_line_list(location):
-    pass
+    global line_list
+    for data_point in line_list:
+        if data_point["x"] == location[0]:
+            return data_point
 
 
 # Create a random line list (2d only)
@@ -129,6 +132,11 @@ def make_random_line_list(starting_value, samples) -> list:
         graph.append(data_point)
 
     return graph
+
+
+def make_global_line_list(starting_value, samples):
+    global line_list
+    line_list = make_random_line_list(starting_value, samples)
 
 
 FUNCTIONS = {

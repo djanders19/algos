@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>CS 5800 demo</title>
+    <script type="text/javascript" src="https://d3js.org/d3.v4.min.js"></script>
+  </head>
+
+  <body>
+    <div id="my_dataviz"></div>
+
+    <!--TODO: move this to its own file-->
+    <script>
+      // set the dimensions and margins of the graph
+      let margin = {top: 10, right: 30, bottom: 30, left: 60},
+      width = 460 - margin.left - margin.right,
+      height = 400 - margin.top - margin.bottom;
+
+      // append the svg object to the body of the page
+      let svg = d3.select("#my_dataviz")
+        .append("svg")
+          .attr("width", width + margin.left + margin.right)
+          .attr("height", height + margin.top + margin.bottom)
+        .append("g")
+          .attr("transform",
+                "translate(" + margin.left + "," + margin.top + ")");
+
+      let x;
+      let y;
+
+      //Read the data
+      d3.json("/graph/ackley",
+        // Now I can use this dataset
+        function(data) {
+          x = d3.scaleLinear()
+            .domain([-32, d3.max(data, function(d) { return +d.x; })])
+            .range([ 0, width ]);
+          svg.append("g")
+            .attr("transform", "translate(0," + height + ")")
+            .call(d3.axisBottom(x));
+
+          // Add Y axis
+          y = d3.scaleLinear()
+            .domain([0, d3.max(data, function(d) { return +d.y; })])
+            .range([ height, 0 ]);
+          svg.append("g")
+            .call(d3.axisLeft(y));
+
+          // Add the line
+          svg.append("path")
+            .datum(data)
+            .attr("fill", "none")
+            .attr("stroke", "steelblue")
+            .attr("stroke-width", 1.5)
+            .attr("d", d3.line()
+              .x(function(d) { return x(d.x) })
+              .y(function(d) { return y(d.y) })
+              )
+        }
+      );
+
+      // Bad but functional
+      let i = 0;
+      let dot;
+      const t = svg.transition().duration(500);
+
+      let pointsData;
+
+      function animatePoints() {
+        setTimeout(function() {
+          if (i + 1 < pointsData.length) {
+            let nextPoint = pointsData[i + 1];
+            dot.transition(t)
+                  .attr("cx", d => x(nextPoint.x))
+                  .attr("cy", d => y(nextPoint.y))
+          }
+          i++;
+          if (i < pointsData.length) {
+            animatePoints();
+          }
+        }, 500)
+      }
+
+      let current_attempt = 0;
+      const attempts = 5;
+
+      function checkXandYFunctions() {
+        setTimeout(function() {
+          if ((typeof(x !== "function")) && (typeof(y !== "function")) && current_attempt < attempts) {
+            console.log("Waiting on X and Y");
+            current_attempt += 1;
+            checkXandYFunctions();
+          }
+        }, 500)
+      }
+
+      d3.json("/points/ackley",
+        function(data) {
+          checkXandYFunctions();
+          pointsData = data;
+          dot = svg.append('g')
+              .append("circle")
+                .attr("cx", function (d) { return x(data[i].x) } )
+                .attr("cy", function (d) { return y(data[i].y) } )
+                .attr("r", 1.5)
+                .style("fill", "red");
+          animatePoints();
+      });
+
+    </script>
+
+  </body>
+</html>
