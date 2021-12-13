@@ -25,6 +25,9 @@ class RandomRestartAgent(Agent):
             if self.eval(self.agent.state) < self.value:
                 self.state = self.agent.state.copy()
                 self.value = self.eval(self.state)
+            # keep track of the path that the agent followed:
+            self.path.append(self.agent.path.copy())
+            self.agent.path.clear()
             # Randomly reset the agent's starting state:
             for d in range(self.dimensions):
                 self.agent.state[d] = rand.uniform(-self.start_range, self.start_range)

@@ -20,6 +20,7 @@ class Agent:
         self.state = initial_state.copy()
         self.dimensions = len(self.state)
         self.value = self.eval(self.state)
+        self.path = []
 
     def print_state(self):
         print("Agent is at state: ", self.state)
