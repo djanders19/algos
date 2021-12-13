@@ -7,7 +7,6 @@ class HillClimbingAgent(Agent):
         super(HillClimbingAgent, self).__init__(function_type, initial_state)
         self.step_size = step_size
 
-    
     # Internal function that finds the optimal step from current agent location.
     # Upon finding the best step, it updates the current location.
     def _step(self):
@@ -56,4 +55,3 @@ class HillClimbingAgent(Agent):
                 return
         self.print_state()
         return
-
