@@ -1,4 +1,5 @@
 import math
+import random
 
 
 def evaluate(function_type, location):
@@ -85,9 +86,37 @@ def evaluate_sphere(location):
     return acc
 
 
+# TODO: create this
+def evaluate_line_list(location):
+    pass
+
+
+# Create a random line list (2d only)
+def make_random_line_list(starting_value, samples) -> list:
+    last_val = starting_value
+
+    graph = []
+    for i in range(1, samples + 1):
+        data_point = {}
+        data_point["x"] = i
+        direction = random.randint(0, 1)
+        new_val = 0
+        if direction == 0:
+            new_val = last_val + random.expovariate(0.5)
+        else:
+            new_val = last_val - random.expovariate(0.5)
+        data_point["y"] = str(round(new_val, 2))
+        last_val = new_val
+
+        graph.append(data_point)
+
+    return graph
+
+
 FUNCTIONS = {
     "rosenbrock": evaluate_rosenbrock,
     "rastrigin": evaluate_rastrigin,
     "ackley": evaluate_ackley,
-    "sphere": evaluate_sphere
+    "sphere": evaluate_sphere,
+    "line_list": evaluate_line_list
 }

@@ -29,7 +29,6 @@ class RandomRestartAgent(Agent):
             for d in range(self.dimensions):
                 self.agent.state[d] = rand.uniform(-self.start_range, self.start_range)
             self.agent.value = self.eval(self.agent.state)
-    
 
     # Runs the hill climbing algorithm with <self.num_restarts> restarts,
     # limiting the number of iterations of each run of the hill-climbing
@@ -48,4 +47,3 @@ class RandomRestartAgent(Agent):
             for d in range(self.diminsions):
                 self.state[d] = rand.uniform(-start_range, start_range)
             self.agent.value = self.eval(self.agent.state)
-    
