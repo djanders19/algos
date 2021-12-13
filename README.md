@@ -14,3 +14,5 @@ python3 ./app.py
 ```
 
 Open a web browser and navigate to http://localhost:5000
+
+Alternatively, this project can be run using Docker.

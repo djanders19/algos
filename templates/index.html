@@ -31,9 +31,8 @@
       d3.json("/graph",
         // Now I can use this dataset
         function(data) {
-          // Add X axis --> it is a date format
-          x = d3.scaleTime()
-            .domain(d3.extent(data, function(d) { return d3.timeParse("%Y-%m-%d")(d.date); }))
+          x = d3.scaleLinear()
+            .domain([0, d3.max(data, function(d) { return +d.x; })])
             .range([ 0, width ]);
           svg.append("g")
             .attr("transform", "translate(0," + height + ")")
@@ -41,7 +40,7 @@
 
           // Add Y axis
           y = d3.scaleLinear()
-            .domain([0, d3.max(data, function(d) { return +d.value; })])
+            .domain([0, d3.max(data, function(d) { return +d.y; })])
             .range([ height, 0 ]);
           svg.append("g")
             .call(d3.axisLeft(y));
@@ -53,8 +52,8 @@
             .attr("stroke", "steelblue")
             .attr("stroke-width", 1.5)
             .attr("d", d3.line()
-              .x(function(d) { return x(d3.timeParse("%Y-%m-%d")(d.date)) })
-              .y(function(d) { return y(d.value) })
+              .x(function(d) { return x(d.x) })
+              .y(function(d) { return y(d.y) })
               )
         }
       );
@@ -70,8 +69,8 @@
           if (i + 1 < data.length) {
             let nextPoint = data[i + 1];
             dot.transition(t)
-                  .attr("cx", d => x(d3.timeParse("%Y-%m-%d")(nextPoint.date)))
-                  .attr("cy", d => y(nextPoint.value))
+                  .attr("cx", d => x(nextPoint.x))
+                  .attr("cy", d => y(nextPoint.y))
           }
           i++;
           if (i < end) {
@@ -84,8 +83,8 @@
         function(data){
           dot = svg.append('g')
               .append("circle")
-                .attr("cx", function (d) { return x(d3.timeParse("%Y-%m-%d")(data[i].date)) } )
-                .attr("cy", function (d) { return y(data[i].value) } )
+                .attr("cx", function (d) { return x(data[i].x) } )
+                .attr("cy", function (d) { return y(data[i].y) } )
                 .attr("r", 1.5)
                 .style("fill", "red");
           animatePoints(data.length - 1, data);
