@@ -36,6 +36,7 @@ class SimulatedAnnealingAgent(Agent):
                 self.state = temp_state.copy()
                 self.value = self.eval(self.state)
 
+            self.path.append((self.state.copy(), self.value))
             # Lower temperature, repeat. Since temperature is specified in the
             # provided schedule, we simply repeat.
         

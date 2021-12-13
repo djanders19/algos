@@ -36,6 +36,7 @@ class HillClimbingAgent(Agent):
         
         self.state = bestSoFar.copy()
         self.value = self.eval(self.state)
+        self.path.append((self.state.copy(), self.value))
     
     # Run the Hill Climbing algorithm without a specified stopping point
     def run(self):
