@@ -108,7 +108,7 @@ agent.print_state()
 
 # Simulated annealing tests:
 print("\n\nNOW TESTING SIMULATED ANNEALING")
-schedule = [x / 1000.0 for x in range(25000, 0, -1)]
+schedule = [x / 100000.0 for x in range(2500000, 0, -1)]
 
 print("ROSENBROCK:")
 state = [rand.uniform(-2.048, 2.048) for _ in range(len(RASTRIGIN_ACKLEY_SPHERE_MINIMUM))]
