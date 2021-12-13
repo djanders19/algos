@@ -13,6 +13,24 @@ def evaluate(function_type, location):
     print(f"No function found for function type {function_type}")
 
 
+# The following returns a list of the outputs of each function over a range
+# from start to end with <steps> steps. Note that this *only* works for one-
+# dimensional inputs. We are only visualizing 1D inputs, so this is no big deal.
+def evaluate_range(function_type, start, end, steps):
+    if start > end:
+        start, end = end, start # yay python
+    
+    i = start
+    step = (end - start) / steps
+    vals_in_range = []
+    while(i <= end):
+        vals_in_range.append(evaluate(function_type, [i]))
+        i += step
+    
+    return vals_in_range
+
+
+
 def evaluate_rosenbrock(location):
     acc = 0; # accumulator
 
