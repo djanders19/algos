@@ -4,8 +4,6 @@ import random
 
 from flask import Flask, jsonify, render_template
 
-# from agent.functions import evaluate, evaluate_range, make_global_line_list, line_list # make_random_line_list
-
 import agent.functions
 from agent.hill_climbing_agent import HillClimbingAgent
 from agent.random_restart_agent import RandomRestartAgent
@@ -21,8 +19,6 @@ START_VAL = 98.6
 SAMPLES = 1000
 
 RASTRIGIN_ACKLEY_SPHERE_MINIMUM = [0,0]
-
-# GRAPH = make_random_line_list(START_VAL, SAMPLES)
 
 agent.functions.make_global_line_list(START_VAL, SAMPLES)
 GRAPH = agent.functions.line_list
@@ -148,7 +144,6 @@ def get_x_value(samples, function_min, function_max, input_value):
 def function_graph(function_type):
     sf = RANGES.get(function_type)
 
-    # sample_range = SAMPLES
     function_max = sf[1]
     function_min = sf[0]
 
@@ -191,19 +186,15 @@ def agent_function_points(agent_type, function_type):
         schedule = [x / 1000.0 for x in range(25000, 0, -1)]
         agent = SimulatedAnnealingAgent(function_type, state, 0.1, schedule)
     agent.run()
-    # points = agent.path
-    # print(f"Agent path: {agent.path}")
-    # print(f"Agent path[0]: {agent.path[0]}")
-    # print(f"Agent path[0][0]: {agent.path[0][0]}")
     points = []
-    if agent_type in ["random_restart"] :
-        points = [{"x": point[0][0], "y": point[1]} for point in agent.path[0]]
+    if agent_type in ["random_restart"]:
+        paths = agent.path
+        path = [item for sublist in paths for item in sublist]
     elif agent_type in ["hill_climbing","simulated_annealing"]:
         path = agent.path
         if agent_type == "simulated_annealing":
-            path = agent.path[::100]
-        points = [{"x": point[0][0], "y": point[1]} for point in path] 
-    # print(f"Points in agent path: {points}")
+            path = agent.path[::1000]
+    points = [{"x": point[0][0], "y": point[1]} for point in path] 
 
     return jsonify(points)
 
@@ -212,7 +203,6 @@ def agent_function_points(agent_type, function_type):
 def reset_graph_and_points():
     global GRAPH
     global POINTS
-    # GRAPH = make_random_line_list(START_VAL, SAMPLES)
     GRAPH = agent.functions.make_random_line_list(START_VAL, SAMPLES)
     POINTS = make_random_points()
     return "Created new graph and points"
