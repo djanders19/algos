@@ -80,30 +80,36 @@
         }, 300)
       }
 
-      let current_attempt = 0;
-      const attempts = 5;
+      let mypromise = function functionOne(testInput){
+          console.log("Waiting for points");
+          return new Promise((resolve ,reject)=>{
+              setTimeout(
+                  ()=>{
+                      if (true) {
+                          resolve("Resolved");
+                      } else {
+                          reject("Rejected")
+                      }
+                  } , 2000
+              );
+          });
+      };
 
-      function checkXandYFunctions() {
-        setTimeout(function() {
-          if ((typeof(x !== "function")) && (typeof(y !== "function")) && current_attempt < attempts) {
-            console.log("Waiting on X and Y");
-            current_attempt += 1;
-            checkXandYFunctions();
-          }
-        }, 500)
-      }
-
-      d3.json("/points/simulated_annealing/rastrigin",
-        function(data) {
-          checkXandYFunctions();
-          pointsData = data;
-          dot = svg.append('g')
-              .append("circle")
-                .attr("cx", function (d) { return x(data[i].x) } )
-                .attr("cy", function (d) { return y(data[i].y) } )
-                .attr("r", 2.5)
-                .style("fill", "red");
-          animatePoints();
+      mypromise().then((res)=>{
+          d3.json("/points/simulated_annealing/rastrigin",
+            function(data) {
+              console.log("Got points");
+              pointsData = data;
+              dot = svg.append('g')
+                  .append("circle")
+                    .attr("cx", function (d) { return x(data[i].x) } )
+                    .attr("cy", function (d) { return y(data[i].y) } )
+                    .attr("r", 2.5)
+                    .style("fill", "red");
+              animatePoints();
+          });
+      }).catch((error)=>{
+          console.log(`Handling error as we received ${error}`);
       });
 
     </script>

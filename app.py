@@ -171,7 +171,7 @@ def function_points(function_type):
 
 @app.route("/points/<agent_type>/<function_type>")
 def agent_function_points(agent_type, function_type):
-    # global GRAPH
+    global GRAPH
     sf = RANGES.get(function_type)
     if function_type == "line_list":
         state = GRAPH
